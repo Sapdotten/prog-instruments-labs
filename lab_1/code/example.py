@@ -32,13 +32,13 @@ class MainWindow(QMainWindow):
         self.FONT = "Consolas"
         self.FONT_SIZE = 14
         
-        self.teach_old = self.create_button("Повторить выученное", self.repeat_old)
-        self.teach_new = self.create_button("Выучить новое", self.learn_new)
-        self.teach_all = self.create_button("Учить все вопросы", self.learn_all)
-        self.menu_button = self.create_button("Вернуться в меню", self.set_menu)
-        self.good_button = self.create_button('Ответил', self.good_answer, self.GOOD_BUTTON_COLOR)
-        self.bad_button = self.create_button('Не ответил', self.bad_answer, self.BAD_BUTTON_COLOR)
-        self.skip_button = self.create_button('Отложить вопрос', self.skip_question)
+        self.teach_old = self.create_button("Повторить выученное", self.repeat_old_button_action)
+        self.teach_new = self.create_button("Выучить новое", self.learn_new_button_action)
+        self.teach_all = self.create_button("Учить все вопросы", self.learn_all_button_action)
+        self.menu_button = self.create_button("Вернуться в меню", self.set_main_menu)
+        self.good_button = self.create_button('Ответил', self.good_answer_button_action, self.GOOD_BUTTON_COLOR)
+        self.bad_button = self.create_button('Не ответил', self.bad_answer_button_action, self.BAD_BUTTON_COLOR)
+        self.skip_button = self.create_button('Отложить вопрос', self.skip_question_button_action)
         
         self.check_box = QCheckBox()
         self.question_label = QLabel()
@@ -52,9 +52,9 @@ class MainWindow(QMainWindow):
         self.unlearned_label.setFont(QFont(self.FONT, self.FONT_SIZE))
         self.unlearned_label.setStyleSheet(f"color: {self.STATISTIC_TEXT_COLOR};")
 
-        self.initUI()
+        self.init_ui()
 
-    def initUI(self):
+    def init_ui(self):
         """initializing starting ui with button for chosing mode
         """
         self.setGeometry(300, 300, 600, 200)
@@ -75,10 +75,10 @@ class MainWindow(QMainWindow):
         vbox.addWidget(self.check_box)
         vbox.addStretch(1)
         self.setCentralWidget(widget)
-        self.center()
+        self.move_to_center()
         self.show()
 
-    def center(self):
+    def move_to_center(self):
         """move window to center of screen
         """
         qr = self.frameGeometry()
@@ -86,7 +86,7 @@ class MainWindow(QMainWindow):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    def changeUI(self):
+    def change_ui(self):
         """Changes UI after choose of type to learning
         """
         widget = QWidget()
@@ -136,7 +136,7 @@ class MainWindow(QMainWindow):
 
         bottom_hbox = QHBoxLayout()
 
-        self.update_stats_labels()
+        self.update_statistic_labels()
         bottom_stats_vbox = QVBoxLayout()
         bottom_stats_vbox.addWidget(self.learned_label)
         bottom_stats_vbox.addWidget(self.inprocess_label)
@@ -160,7 +160,7 @@ class MainWindow(QMainWindow):
 
         self.setGeometry(300, 300, 600, 400)
         self.setCentralWidget(widget)
-        self.center()
+        self.move_to_center()
         self.show()
 
     def create_button(self, text: str, func, btn_color: str = None) -> QPushButton:
@@ -194,28 +194,28 @@ class MainWindow(QMainWindow):
         button.setFont(QFont("FreeMono, monospace", 15))
         return button
 
-    def repeat_old(self):
+    def repeat_old_button_action(self):
         """ Action for button for repeat old questions.
             Changed ui for learning.
         """
         Questions.repeat_old()
-        self.changeUI()
+        self.change_ui()
 
-    def learn_all(self):
+    def learn_all_button_action(self):
         """ Action for button for repeat all questions.
             Changed ui for learning.
         """
         Questions.repeat_all()
-        self.changeUI()
+        self.change_ui()
 
-    def learn_new(self):
+    def learn_new_button_action(self):
         """ Action for button for repeat new questions.
             Changed ui for learning.
         """
         Questions.learn_new()
-        self.changeUI()
+        self.change_ui()
 
-    def good_answer(self):
+    def good_answer_button_action(self):
         """Action for button for good answer to the question.
             Updates statistics.
         """
@@ -227,36 +227,37 @@ class MainWindow(QMainWindow):
             self.question_label.setText("Поздравляю! Ты смог ответить на все вопросы)")
             self.good_button.setEnabled(False)
             self.bad_button.setEnabled(False)
-        self.update_stats_labels()
+        self.update_statistic_labels()
 
-    def update_stats_labels(self):
-        """ Updates labels with statistics
-        """
-        self.learned_label.setText(f'Точно выучено вопросов: {Questions.get_learned()}')
-        self.inprocess_label.setText(f'В процессе запоминания: {Questions.get_inprocess()}')
-        self.unlearned_label.setText(f'Осталось невыученных: {Questions.get_unlearned()}')
-
-    def bad_answer(self):
+    def bad_answer_button_action(self):
         """Action for button for bad answer to the question.
             Updates statistics.
         """
         Questions.question_failed()
         text = Questions.get_question()
         self.question_label.setText("Повтори и попробуй еще раз...\n" + text)
-        self.update_stats_labels()
+        self.update_statistic_labels()
 
-    def set_menu(self):
+    def update_statistic_labels(self):
+        """ Updates labels with statistics
+        """
+        self.learned_label.setText(f'Точно выучено вопросов: {Questions.get_learned()}')
+        self.inprocess_label.setText(f'В процессе запоминания: {Questions.get_inprocess()}')
+        self.unlearned_label.setText(f'Осталось невыученных: {Questions.get_unlearned()}')
+
+
+    def set_main_menu(self):
         """ Opens window with main menu.
         """
         self.close()
         self.__init__()
 
-    def skip_question(self):
+    def skip_question_button_action(self):
         """ Action for button for skip question.
             Updates statistics.
         """
         Questions.skip_question()
-        self.update_stats_labels()
+        self.update_statistic_labels()
         text = Questions.get_question()
         self.question_label.setText(text)
 
