@@ -138,18 +138,18 @@ class MainWindow(QMainWindow):
         text_hbox = QHBoxLayout()
         text_hbox.addWidget(self.question_label)
 
-        btns_hbox = QHBoxLayout()
-        btns_hbox.addWidget(self.good_button)
-        btns_hbox.addWidget(self.skip_button)
-        btns_hbox.addWidget(self.bad_button)
+        buttons_hbox = QHBoxLayout()
+        buttons_hbox.addWidget(self.good_button)
+        buttons_hbox.addWidget(self.skip_button)
+        buttons_hbox.addWidget(self.bad_button)
 
         bottom_hbox = QHBoxLayout()
 
         self.update_statistic_labels()
-        bottom_stats_vbox = QVBoxLayout()
-        bottom_stats_vbox.addWidget(self.learned_label)
-        bottom_stats_vbox.addWidget(self.inprocess_label)
-        bottom_stats_vbox.addWidget(self.unlearned_label)
+        bottom_statistics_vbox = QVBoxLayout()
+        bottom_statistics_vbox.addWidget(self.learned_label)
+        bottom_statistics_vbox.addWidget(self.inprocess_label)
+        bottom_statistics_vbox.addWidget(self.unlearned_label)
 
         bottom_backbutton_vbox = QVBoxLayout()
 
@@ -157,9 +157,9 @@ class MainWindow(QMainWindow):
 
         in_widget_vbox.addLayout(text_hbox)
         in_widget_vbox.addStretch()
-        in_widget_vbox.addLayout(btns_hbox)
+        in_widget_vbox.addLayout(buttons_hbox)
 
-        bottom_hbox.addLayout(bottom_stats_vbox)
+        bottom_hbox.addLayout(bottom_statistics_vbox)
         bottom_hbox.addStretch()
         bottom_hbox.addLayout(bottom_backbutton_vbox)
 
