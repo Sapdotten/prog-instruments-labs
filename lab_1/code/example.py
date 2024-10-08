@@ -28,7 +28,10 @@ class MainWindow(QMainWindow):
         self.X = 300
         self.Y = 300
         self.WINDOW_WIDTH = 600
-        self.WINDOW_HEIGHT = 200
+        self.WINDOW_HEIGHT_MENU = 200
+        self.WINDOW_HEIGHT_QUESTIONS = 400
+        self.QUESTION_LABEL_WIDTH = 500
+        self.QUESTION_LABEL_HEIGHT = 200
 
         self.BUTTON_COLOR = '#A99AEA'
         self.GOOD_BUTTON_COLOR = "#95D7AE"
@@ -37,10 +40,12 @@ class MainWindow(QMainWindow):
         self.PLAIN_TEXT_COLOR = '#342E37'
         self.STATISTIC_TEXT_COLOR = '#735CDD'
         self.BACKGROUND_COLOR = '#C5BBF1'
+
         self.FONT = "Consolas"
         self.CHECKBOX_FONT = "FreeMono, monospace"
         self.CHECKBOX_FONT_SIZE = 12
         self.FONT_SIZE = 14
+        self.QUESTION_FONT_SIZE = 20
         
         self.teach_old = self.create_button("Повторить выученное", self.repeat_old_button_action)
         self.teach_new = self.create_button("Выучить новое", self.learn_new_button_action)
@@ -67,7 +72,7 @@ class MainWindow(QMainWindow):
     def init_ui(self):
         """initializing starting ui with button for chosing mode
         """
-        self.setGeometry(self.X, self.Y, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+        self.setGeometry(self.X, self.Y, self.WINDOW_WIDTH, self.WINDOW_HEIGHT_MENU)
         self.setStyleSheet(f"background-color: {self.BACKGROUND_COLOR}")
         self.setWindowTitle(self.PROGRAM_NAME)
         self.setWindowIcon(QIcon(self.ICON_PATH))
@@ -111,10 +116,11 @@ class MainWindow(QMainWindow):
         self.question_label.setStyleSheet(
             f"padding :15px; color: {self.PLAIN_TEXT_COLOR};"
         )
-        self.question_label.setFont(QFont("Consolas", 20))
+        self.question_label.setFont(QFont(self.FONT, self.QUESTION_FONT_SIZE))
         self.question_label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
         self.question_label.setWordWrap(True)
-        self.question_label.resize(500, 200)
+        self.question_label.resize(self.QUESTION_LABEL_WIDTH, self.QUESTION_LABEL_HEIGHT)
+
         text = Questions.get_question()
         if text is not None:
             self.question_label.setText(Questions.get_question())
@@ -122,6 +128,7 @@ class MainWindow(QMainWindow):
             self.question_label.setText("Похоже, таких вопросов еще нет...")
             self.good_button.setEnabled(False)
             self.bad_button.setEnabled(False)
+        
         container = QWidget(self)
         container.setStyleSheet(f"background-color: {self.QUESTION_TEXT_COLOR};")
         upper_vbox = QVBoxLayout()
@@ -135,7 +142,6 @@ class MainWindow(QMainWindow):
         btns_hbox.addWidget(self.good_button)
         btns_hbox.addWidget(self.skip_button)
         btns_hbox.addWidget(self.bad_button)
-
 
         bottom_hbox = QHBoxLayout()
 
@@ -161,7 +167,7 @@ class MainWindow(QMainWindow):
         main_vbox.addLayout(upper_vbox)
         main_vbox.addLayout(bottom_hbox)
 
-        self.setGeometry(300, 300, 600, 400)
+        self.setGeometry(self.X, self.Y, self.WINDOW_WIDTH, self.WINDOW_HEIGHT_QUESTIONS)
         self.setCentralWidget(widget)
         self.move_to_center()
         self.show()
