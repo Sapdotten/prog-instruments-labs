@@ -22,6 +22,14 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        self.PROGRAM_NAME = "Studiyng helper"
+        self.ICON_PATH = "src/images/icon.png"
+
+        self.X = 300
+        self.Y = 300
+        self.WINDOW_WIDTH = 600
+        self.WINDOW_HEIGHT = 200
+
         self.BUTTON_COLOR = '#A99AEA'
         self.GOOD_BUTTON_COLOR = "#95D7AE"
         self.BAD_BUTTON_COLOR = "#FA824C"
@@ -30,6 +38,8 @@ class MainWindow(QMainWindow):
         self.STATISTIC_TEXT_COLOR = '#735CDD'
         self.BACKGROUND_COLOR = '#C5BBF1'
         self.FONT = "Consolas"
+        self.CHECKBOX_FONT = "FreeMono, monospace"
+        self.CHECKBOX_FONT_SIZE = 12
         self.FONT_SIZE = 14
         
         self.teach_old = self.create_button("Повторить выученное", self.repeat_old_button_action)
@@ -57,10 +67,10 @@ class MainWindow(QMainWindow):
     def init_ui(self):
         """initializing starting ui with button for chosing mode
         """
-        self.setGeometry(300, 300, 600, 200)
+        self.setGeometry(self.X, self.Y, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
         self.setStyleSheet(f"background-color: {self.BACKGROUND_COLOR}")
-        self.setWindowTitle("Studiyng helper")
-        self.setWindowIcon(QIcon("src/images/icon.png"))
+        self.setWindowTitle(self.PROGRAM_NAME)
+        self.setWindowIcon(QIcon(self.ICON_PATH))
 
         widget = QWidget()
         vbox = QVBoxLayout(widget)
@@ -68,14 +78,17 @@ class MainWindow(QMainWindow):
         vbox.addWidget(self.teach_old)
         vbox.addWidget(self.teach_new)
         vbox.addWidget(self.teach_all)
+
         self.check_box.stateChanged.connect(Questions.set_random_state)
         self.check_box.setText('Показывать вопросы в случайном порядке')
         self.check_box.setChecked(True)
-        self.check_box.setFont(QFont("FreeMono, monospace", 12))
+        self.check_box.setFont(QFont(self.CHECKBOX_FONT, self.CHECKBOX_FONT_SIZE))
+
         vbox.addWidget(self.check_box)
         vbox.addStretch(1)
         self.setCentralWidget(widget)
         self.move_to_center()
+        
         self.show()
 
     def move_to_center(self):
@@ -95,8 +108,6 @@ class MainWindow(QMainWindow):
         self.good_button.setEnabled(True)
         self.bad_button.setEnabled(True)
 
-        # scroll_area.verticalScrollBar().
-
         self.question_label.setStyleSheet(
             f"padding :15px; color: {self.PLAIN_TEXT_COLOR};"
         )
@@ -111,28 +122,20 @@ class MainWindow(QMainWindow):
             self.question_label.setText("Похоже, таких вопросов еще нет...")
             self.good_button.setEnabled(False)
             self.bad_button.setEnabled(False)
-        # self.label.setGeometry(
-        # 0, 0, 400, scroll_area.height())
         container = QWidget(self)
         container.setStyleSheet(f"background-color: {self.QUESTION_TEXT_COLOR};")
         upper_vbox = QVBoxLayout()
         upper_vbox.addWidget(container)
         in_widget_vbox = QVBoxLayout(container)
 
-        # textbox = QVBoxLayout()
-        # textbox.addWidget(scroll_area)
         text_hbox = QHBoxLayout()
         text_hbox.addWidget(self.question_label)
-        # vrbox.addStretch()
 
         btns_hbox = QHBoxLayout()
-        # btns_hbox.addStretch(1)
         btns_hbox.addWidget(self.good_button)
-        # btns_hbox.addStretch(1)
         btns_hbox.addWidget(self.skip_button)
         btns_hbox.addWidget(self.bad_button)
 
-        # btns_hbox.addStretch(1)
 
         bottom_hbox = QHBoxLayout()
 
@@ -187,10 +190,6 @@ class MainWindow(QMainWindow):
                              border-radius: 5px;
                              """
         )
-        # shadow = QGraphicsDropShadowEffect(
-        #     blurRadius=7, xOffset=3, yOffset=3, color=QColor("#31021F")
-        # )
-        # button.setGraphicsEffect(shadow)
         button.setFont(QFont("FreeMono, monospace", 15))
         return button
 
