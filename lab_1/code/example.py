@@ -17,7 +17,7 @@ from PyQt5.QtGui import QIcon, QFont
 from questions import Questions
 
 
-class Example(QMainWindow):
+class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
@@ -233,5 +233,5 @@ class Example(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    ex = Example()
+    ex = MainWindow()
     sys.exit(app.exec_())
