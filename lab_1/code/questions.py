@@ -1,11 +1,32 @@
+"""
+This module defines the `Questions` class, which is used to manage a queue of questions
+for studying or testing. The class supports operations for learning new questions,
+repeating old questions, tracking learned and unlearned questions, and handling
+randomized or sequential question selection.
+"""
+
 import random
 from typing import List, Union
 
 class Questions:
-    files = {'all': 'src/questions.txt',
-             'old': 'src/learned_questions.txt',
-             'new': "src/unlearned_questions.txt"}
-    status = None  # old new or all
+    """
+    The `Questions` class manages a queue of questions for learning and review.
+    
+    It supports the following features:
+    - Loading questions from files, categorized as 'new', 'old', or 'all'.
+    - Shuffling the order of questions if `random_state` is enabled.
+    - Tracking progress of learning, including counts of learned, unlearned, and in-process questions.
+    - Adding questions to the 'learned' list after they are answered correctly multiple times.
+    - Removing questions from the unlearned list after successful learning.
+    - Handling failed questions, skipping questions, and managing the question queue dynamically.
+    """
+    files = {
+        "all": "src/questions.txt",
+        "old": "src/learned_questions.txt",
+        "new": "src/unlearned_questions.txt",
+    }
+
+    status = None  # Can be 'old', 'new', or 'all'
     queue: List[List[Union[int, str]]] = []
     learned_count: int = 0
     inprocess_count: int = 0
@@ -43,7 +64,8 @@ class Questions:
 
     @classmethod
     def read_file(cls):
-        with open(cls.files[cls.status], 'r', encoding='utf-8') as f:
+        """Reads questions from the file and populates the queue."""
+        with open(cls.files[cls.status], "r", encoding="utf-8") as f:
             if cls.random_state:
                 for text in f.readlines():
                     cls.queue.insert(random.randint(0, len(cls.queue) + 1), [text, 0])
@@ -52,8 +74,8 @@ class Questions:
                     cls.queue.append([text, 0])
 
     @classmethod
-    def question_accept(cls):
-        """Вызывается, если пользовоатель дал верный ответ на вопрос"""
+    def question_accept(cls) -> None:
+        """Marks the current question as correctly answered and updates the queue."""
         cls.queue[0][1] += 1
         if cls.queue[0][1] > 3:
             cls.add_learned()
@@ -72,16 +94,16 @@ class Questions:
 
     @classmethod
     def update_learned(cls):
-        with open(cls.files['old'], 'w', encoding='utf-8') as f:
+        """Updates the list of learned questions in the file."""
+        with open(cls.files["old"], "w", encoding="utf-8") as f:
             for elem in cls.queue:
                 f.write(elem[0])
 
     @classmethod
     def add_learned(cls):
-        """Вызывается после каждого выученного и добавляет его в список выученных
-        """
-        if cls.status == 'new':
-            with open(cls.files['old'], 'a+', encoding='utf-8') as f:
+        """Adds the current question to the list of learned questions."""
+        if cls.status == "new":
+            with open(cls.files["old"], "a+", encoding="utf-8") as f:
                 f.write(cls.queue[0][0])
         elif cls.status == 'all':
             learned = set()
@@ -94,10 +116,10 @@ class Questions:
                     f.write(text)
 
     @classmethod
-    def remove_from_unlearned(cls, unlearned_text: str):
-        """Сохраняет новый список невыученных вопроов после каждого выученного"""
-        if cls.status == 'new':
-            with open(cls.files['new'], 'w', encoding='utf-8') as f:
+    def remove_from_unlearned(cls, unlearned_text: str) -> None:
+        """Removes the learned question from the unlearned questions file."""
+        if cls.status == "new":
+            with open(cls.files["new"], "w", encoding="utf-8") as f:
                 for elem in cls.queue:
                     f.write(elem[0])
         elif cls.status == 'all':
@@ -112,8 +134,9 @@ class Questions:
 
     @classmethod
     def delete_from_learned(cls, unlearned_text: str):
-        if cls.status == 'old':
-            with open(cls.files['old'], 'w', encoding='utf-8') as f:
+        """Removes the failed question from the learned questions file."""
+        if cls.status == "old":
+            with open(cls.files["old"], "w", encoding="utf-8") as f:
                 for text in cls.queue[1:]:
                     f.write(text[0])
         elif cls.status == 'all':
@@ -127,9 +150,10 @@ class Questions:
                     f.write(text)
 
     @classmethod
-    def add_to_unlearned(cls, unlearned_text: str):
-        if cls.status == 'old':
-            with open(cls.files['new'], 'a+', encoding='utf-8') as f:
+    def add_to_unlearned(cls, unlearned_text: str) -> None:
+        """Adds a failed question back to the unlearned list."""
+        if cls.status == "old":
+            with open(cls.files["new"], "a+", encoding="utf-8") as f:
                 f.write(unlearned_text)
         elif cls.status == 'all':
             unlearned = set()
@@ -142,8 +166,8 @@ class Questions:
                     f.write(text)
 
     @classmethod
-    def question_failed(cls):
-        """Вызывается если пользователь провалил вопрос"""
+    def question_failed(cls) -> None:
+        """Handles the case when the user fails a question."""
         if cls.inprocess_count >= 1 and cls.queue[0][1] > 0:
             cls.inprocess_count -= 1
         cls.queue[0][1] = 0
