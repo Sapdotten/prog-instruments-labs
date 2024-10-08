@@ -173,15 +173,16 @@ class MainWindow(QMainWindow):
         self.show()
 
     def create_button(self, text: str, func, btn_color: str = None) -> QPushButton:
-        """Creates a button with styles
+        """Create a button with custom styles.
 
-        Args:
-            text (str): text of button
-            func (_type_): function for button
+    Args:
+        text (str): Text to display on the button.
+        function (Callable[[None], None]): Function to connect to the button's clicked signal.
+        button_color (str, optional): Background color for the button. Defaults to self.BUTTON_COLOR.
 
-        Returns:
-            QPushButton: button with styles
-        """
+    Returns:
+        QPushButton: A styled QPushButton instance.
+    """
         if btn_color is None:
             btn_color = self.BUTTON_COLOR
         button = QPushButton(text)
