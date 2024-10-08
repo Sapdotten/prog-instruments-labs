@@ -17,6 +17,8 @@ from PyQt5.QtGui import QIcon, QFont
 from questions import Questions
 
 class MainWindow(QMainWindow):
+    """Class of main window of the app.
+    """
 
     def __init__(self):
         super().__init__()
@@ -53,7 +55,7 @@ class MainWindow(QMainWindow):
         self.initUI()
 
     def initUI(self):
-        """Initializing UI with one button for chose dataset directory
+        """initializing starting ui with button for chosing mode
         """
         self.setGeometry(300, 300, 600, 200)
         self.setStyleSheet(f"background-color: {self.BACKGROUND_COLOR}")
@@ -77,6 +79,8 @@ class MainWindow(QMainWindow):
         self.show()
 
     def center(self):
+        """move window to center of screen
+        """
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
@@ -191,18 +195,30 @@ class MainWindow(QMainWindow):
         return button
 
     def repeat_old(self):
+        """ Action for button for repeat old questions.
+            Changed ui for learning.
+        """
         Questions.repeat_old()
         self.changeUI()
 
     def learn_all(self):
+        """ Action for button for repeat all questions.
+            Changed ui for learning.
+        """
         Questions.repeat_all()
         self.changeUI()
 
     def learn_new(self):
+        """ Action for button for repeat new questions.
+            Changed ui for learning.
+        """
         Questions.learn_new()
         self.changeUI()
 
     def good_answer(self):
+        """Action for button for good answer to the question.
+            Updates statistics.
+        """
         Questions.question_accept()
         text = Questions.get_question()
         if text is not None:
@@ -214,21 +230,31 @@ class MainWindow(QMainWindow):
         self.update_stats_labels()
 
     def update_stats_labels(self):
+        """ Updates labels with statistics
+        """
         self.learned_label.setText(f'Точно выучено вопросов: {Questions.get_learned()}')
         self.inprocess_label.setText(f'В процессе запоминания: {Questions.get_inprocess()}')
         self.unlearned_label.setText(f'Осталось невыученных: {Questions.get_unlearned()}')
 
     def bad_answer(self):
+        """Action for button for bad answer to the question.
+            Updates statistics.
+        """
         Questions.question_failed()
         text = Questions.get_question()
         self.question_label.setText("Повтори и попробуй еще раз...\n" + text)
         self.update_stats_labels()
 
     def set_menu(self):
+        """ Opens window with main menu.
+        """
         self.close()
         self.__init__()
 
     def skip_question(self):
+        """ Action for button for skip question.
+            Updates statistics.
+        """
         Questions.skip_question()
         self.update_stats_labels()
         text = Questions.get_question()
