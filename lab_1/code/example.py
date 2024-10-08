@@ -21,11 +21,11 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.btn_color = '#A99AEA'
-        self.question_color = '#DCE3F9'
-        self.text_color = '#342E37'
-        self.stats_color = '#735CDD'
-        self.back_color = '#C5BBF1'
+        self.BUTTON_COLOR = '#A99AEA'
+        self.QUESTION_TEXT_COLOR = '#DCE3F9'
+        self.PLAIN_TEXT_COLOR = '#342E37'
+        self.STATISTIC_TEXT_COLOR = '#735CDD'
+        self.BACKGROUND_COLOR = '#C5BBF1'
         self.teach_old = self.create_button("Повторить выученное", self.repeat_old)
         self.teach_new = self.create_button("Выучить новое", self.learn_new)
         self.teach_all = self.create_button("Учить все вопросы", self.learn_all)
@@ -37,13 +37,13 @@ class MainWindow(QMainWindow):
         self.question_label = QLabel()
         self.learned_label = QLabel()
         self.learned_label.setFont(QFont("Consolas", 14))
-        self.learned_label.setStyleSheet(f"color: {self.stats_color};")
+        self.learned_label.setStyleSheet(f"color: {self.STATISTIC_TEXT_COLOR};")
         self.inprocess_label = QLabel()
         self.inprocess_label.setFont(QFont("Consolas", 14))
-        self.inprocess_label.setStyleSheet(f"color: {self.stats_color};")
+        self.inprocess_label.setStyleSheet(f"color: {self.STATISTIC_TEXT_COLOR};")
         self.unlearned_label = QLabel()
         self.unlearned_label.setFont(QFont("Consolas", 14))
-        self.unlearned_label.setStyleSheet(f"color: {self.stats_color};")
+        self.unlearned_label.setStyleSheet(f"color: {self.STATISTIC_TEXT_COLOR};")
 
         self.initUI()
 
@@ -51,7 +51,7 @@ class MainWindow(QMainWindow):
         """Initializing UI with one button for chose dataset directory
         """
         self.setGeometry(300, 300, 600, 200)
-        self.setStyleSheet(f"background-color: {self.back_color}")
+        self.setStyleSheet(f"background-color: {self.BACKGROUND_COLOR}")
         self.setWindowTitle("Studiyng helper")
         self.setWindowIcon(QIcon("src/images/icon.png"))
 
@@ -81,7 +81,7 @@ class MainWindow(QMainWindow):
         """Changes UI after choose of type to learning
         """
         widget = QWidget()
-        widget.setStyleSheet(f"background-color: {self.back_color};")
+        widget.setStyleSheet(f"background-color: {self.BACKGROUND_COLOR};")
 
         self.good_button.setEnabled(True)
         self.bad_button.setEnabled(True)
@@ -89,7 +89,7 @@ class MainWindow(QMainWindow):
         # scroll_area.verticalScrollBar().
 
         self.question_label.setStyleSheet(
-            f"padding :15px; color: {self.text_color};"
+            f"padding :15px; color: {self.PLAIN_TEXT_COLOR};"
         )
         self.question_label.setFont(QFont("Consolas", 20))
         self.question_label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
@@ -105,7 +105,7 @@ class MainWindow(QMainWindow):
         # self.label.setGeometry(
         # 0, 0, 400, scroll_area.height())
         container = QWidget(self)
-        container.setStyleSheet(f"background-color: {self.question_color};")
+        container.setStyleSheet(f"background-color: {self.QUESTION_TEXT_COLOR};")
         upper_vbox = QVBoxLayout()
         upper_vbox.addWidget(container)
         in_widget_vbox = QVBoxLayout(container)
@@ -165,14 +165,14 @@ class MainWindow(QMainWindow):
             QPushButton: button with styles
         """
         if btn_color is None:
-            btn_color = self.btn_color
+            btn_color = self.BUTTON_COLOR
         button = QPushButton(text)
         button.clicked.connect(func)
         button.resize(button.minimumSizeHint())
         button.setStyleSheet(
             f"""
                              background-color: {btn_color};
-                             color: {self.text_color};
+                             color: {self.PLAIN_TEXT_COLOR};
                              font-size: 20px;
                              padding: 10px 10px 10px 10px;
                              border-radius: 5px;
