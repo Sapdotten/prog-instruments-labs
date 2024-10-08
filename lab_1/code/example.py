@@ -16,33 +16,38 @@ from PyQt5.QtGui import QIcon, QFont
 
 from questions import Questions
 
-
 class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
         self.BUTTON_COLOR = '#A99AEA'
+        self.GOOD_BUTTON_COLOR = "#95D7AE"
+        self.BAD_BUTTON_COLOR = "#FA824C"
         self.QUESTION_TEXT_COLOR = '#DCE3F9'
         self.PLAIN_TEXT_COLOR = '#342E37'
         self.STATISTIC_TEXT_COLOR = '#735CDD'
         self.BACKGROUND_COLOR = '#C5BBF1'
+        self.FONT = "Consolas"
+        self.FONT_SIZE = 14
+        
         self.teach_old = self.create_button("Повторить выученное", self.repeat_old)
         self.teach_new = self.create_button("Выучить новое", self.learn_new)
         self.teach_all = self.create_button("Учить все вопросы", self.learn_all)
         self.menu_button = self.create_button("Вернуться в меню", self.set_menu)
-        self.good_button = self.create_button('Ответил', self.good_answer, "#95D7AE")
-        self.bad_button = self.create_button('Не ответил', self.bad_answer, "#FA824C")
+        self.good_button = self.create_button('Ответил', self.good_answer, self.GOOD_BUTTON_COLOR)
+        self.bad_button = self.create_button('Не ответил', self.bad_answer, self.BAD_BUTTON_COLOR)
         self.skip_button = self.create_button('Отложить вопрос', self.skip_question)
+        
         self.check_box = QCheckBox()
         self.question_label = QLabel()
         self.learned_label = QLabel()
-        self.learned_label.setFont(QFont("Consolas", 14))
+        self.learned_label.setFont(QFont(self.FONT, self.FONT_SIZE))
         self.learned_label.setStyleSheet(f"color: {self.STATISTIC_TEXT_COLOR};")
         self.inprocess_label = QLabel()
-        self.inprocess_label.setFont(QFont("Consolas", 14))
+        self.inprocess_label.setFont(QFont(self.FONT, self.FONT_SIZE))
         self.inprocess_label.setStyleSheet(f"color: {self.STATISTIC_TEXT_COLOR};")
         self.unlearned_label = QLabel()
-        self.unlearned_label.setFont(QFont("Consolas", 14))
+        self.unlearned_label.setFont(QFont(self.FONT, self.FONT_SIZE))
         self.unlearned_label.setStyleSheet(f"color: {self.STATISTIC_TEXT_COLOR};")
 
         self.initUI()
