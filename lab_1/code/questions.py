@@ -1,15 +1,6 @@
 import random
 from typing import List, Union
 
-
-def get_unlearned_questions():
-    questions = {}
-    with open("src/unlearned_questions.txt", 'r', encoding='utf-8') as f:
-        for row in f.readlines():
-            questions[row] = 0
-    return questions
-
-
 class Questions:
     files = {'all': 'src/questions.txt',
              'old': 'src/learned_questions.txt',
