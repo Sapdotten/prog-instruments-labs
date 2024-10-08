@@ -3,21 +3,17 @@ import sys
 from PyQt5.QtWidgets import (
     QPushButton,
     QApplication,
-    QFileDialog,
     QMainWindow,
     QLabel,
     QHBoxLayout,
     QVBoxLayout,
     QWidget,
-    QMessageBox,
-    QScrollArea,
-    QSizePolicy,
-    QGraphicsDropShadowEffect,
     QDesktopWidget,
     QCheckBox
 )
-from PyQt5.QtCore import QCoreApplication, Qt, QRect, QSize
-from PyQt5.QtGui import QIcon, QFont, QColor, QMovie
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon, QFont
+
 from questions import Questions
 
 
