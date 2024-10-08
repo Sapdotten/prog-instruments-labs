@@ -41,11 +41,12 @@ class MainWindow(QMainWindow):
         self.STATISTIC_TEXT_COLOR = '#735CDD'
         self.BACKGROUND_COLOR = '#C5BBF1'
 
-        self.FONT = "Consolas"
-        self.CHECKBOX_FONT = "FreeMono, monospace"
+        self.MAIN_FONT = "Consolas"
+        self.ACCENT_FONT = "FreeMono, monospace"
         self.CHECKBOX_FONT_SIZE = 12
         self.FONT_SIZE = 14
         self.QUESTION_FONT_SIZE = 20
+        self.BUTTON_FONT_SIZE = 15
         
         self.teach_old = self.create_button("Повторить выученное", self.repeat_old_button_action)
         self.teach_new = self.create_button("Выучить новое", self.learn_new_button_action)
@@ -58,13 +59,13 @@ class MainWindow(QMainWindow):
         self.check_box = QCheckBox()
         self.question_label = QLabel()
         self.learned_label = QLabel()
-        self.learned_label.setFont(QFont(self.FONT, self.FONT_SIZE))
+        self.learned_label.setFont(QFont(self.MAIN_FONT, self.FONT_SIZE))
         self.learned_label.setStyleSheet(f"color: {self.STATISTIC_TEXT_COLOR};")
         self.inprocess_label = QLabel()
-        self.inprocess_label.setFont(QFont(self.FONT, self.FONT_SIZE))
+        self.inprocess_label.setFont(QFont(self.MAIN_FONT, self.FONT_SIZE))
         self.inprocess_label.setStyleSheet(f"color: {self.STATISTIC_TEXT_COLOR};")
         self.unlearned_label = QLabel()
-        self.unlearned_label.setFont(QFont(self.FONT, self.FONT_SIZE))
+        self.unlearned_label.setFont(QFont(self.MAIN_FONT, self.FONT_SIZE))
         self.unlearned_label.setStyleSheet(f"color: {self.STATISTIC_TEXT_COLOR};")
 
         self.init_ui()
@@ -87,7 +88,7 @@ class MainWindow(QMainWindow):
         self.check_box.stateChanged.connect(Questions.set_random_state)
         self.check_box.setText('Показывать вопросы в случайном порядке')
         self.check_box.setChecked(True)
-        self.check_box.setFont(QFont(self.CHECKBOX_FONT, self.CHECKBOX_FONT_SIZE))
+        self.check_box.setFont(QFont(self.ACCENT_FONT, self.CHECKBOX_FONT_SIZE))
 
         vbox.addWidget(self.check_box)
         vbox.addStretch(1)
@@ -116,7 +117,7 @@ class MainWindow(QMainWindow):
         self.question_label.setStyleSheet(
             f"padding :15px; color: {self.PLAIN_TEXT_COLOR};"
         )
-        self.question_label.setFont(QFont(self.FONT, self.QUESTION_FONT_SIZE))
+        self.question_label.setFont(QFont(self.MAIN_FONT, self.QUESTION_FONT_SIZE))
         self.question_label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
         self.question_label.setWordWrap(True)
         self.question_label.resize(self.QUESTION_LABEL_WIDTH, self.QUESTION_LABEL_HEIGHT)
@@ -190,14 +191,13 @@ class MainWindow(QMainWindow):
         button.resize(button.minimumSizeHint())
         button.setStyleSheet(
             f"""
-                             background-color: {button_color};
-                             color: {self.PLAIN_TEXT_COLOR};
-                             font-size: 20px;
-                             padding: 10px 10px 10px 10px;
-                             border-radius: 5px;
-                             """
+            background-color: {button_color};
+            color: {self.PLAIN_TEXT_COLOR};
+            padding: 10px;
+            border-radius: 5px;
+            """
         )
-        button.setFont(QFont("FreeMono, monospace", 15))
+        button.setFont(QFont(self.ACCENT_FONT, self.BUTTON_FONT_SIZE))
         return button
 
     def repeat_old_button_action(self):
