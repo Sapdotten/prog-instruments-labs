@@ -172,7 +172,7 @@ class MainWindow(QMainWindow):
         self.move_to_center()
         self.show()
 
-    def create_button(self, text: str, func, btn_color: str = None) -> QPushButton:
+    def create_button(self, text: str, function, button_color: str = None) -> QPushButton:
         """Create a button with custom styles.
 
     Args:
@@ -183,14 +183,14 @@ class MainWindow(QMainWindow):
     Returns:
         QPushButton: A styled QPushButton instance.
     """
-        if btn_color is None:
-            btn_color = self.BUTTON_COLOR
+        if button_color is None:
+            button_color = self.BUTTON_COLOR
         button = QPushButton(text)
-        button.clicked.connect(func)
+        button.clicked.connect(function)
         button.resize(button.minimumSizeHint())
         button.setStyleSheet(
             f"""
-                             background-color: {btn_color};
+                             background-color: {button_color};
                              color: {self.PLAIN_TEXT_COLOR};
                              font-size: 20px;
                              padding: 10px 10px 10px 10px;
