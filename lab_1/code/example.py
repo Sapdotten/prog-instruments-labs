@@ -88,16 +88,16 @@ class MainWindow(QMainWindow):
         vbox.addStretch(1)
         self.setCentralWidget(widget)
         self.move_to_center()
-        
+
         self.show()
 
-    def move_to_center(self):
-        """move window to center of screen
-        """
-        qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
+    def center_window(self):
+        """Move the window to the center of the screen."""
+        window_geometry = self.frameGeometry()
+        center_point = QDesktopWidget().availableGeometry().center()
+        window_geometry.moveCenter(center_point)
+        self.move(window_geometry.topLeft())
+
 
     def change_ui(self):
         """Changes UI after choose of type to learning
