@@ -33,31 +33,36 @@ class Questions:
     random_state: bool = True
 
     @classmethod
-    def clear_data(cls):
+    def clear_data(cls) -> None:
+        """Resets the question queue and counters."""
         cls.queue = []
         cls.learned_count = 0
         cls.inprocess_count = 0
 
     @classmethod
-    def repeat_old(cls):
+    def repeat_old(cls) -> None:
+        """Resets the queue and loads old questions."""
         cls.queue = []
         cls.status = "old"
         cls.read_file()
 
     @classmethod
-    def learn_new(cls):
+    def learn_new(cls) -> None:
+        """Resets the queue and loads new questions."""
         cls.queue = []
         cls.status = 'new'
         cls.read_file()
 
     @classmethod
-    def repeat_all(cls):
+    def repeat_all(cls) -> None:
+        """Resets the queue and loads all questions."""
         cls.queue = []
         cls.status = 'all'
         cls.read_file()
 
     @classmethod
     def get_question(cls) -> Union[str, None]:
+        """Returns the current question if available, else returns None."""
         if len(cls.queue) == 0:
             return None
         return cls.queue[0][0]
@@ -175,19 +180,23 @@ class Questions:
         cls.add_to_unlearned(cls.queue[0][0])
 
     @classmethod
-    def get_learned(cls):
+    def get_learned(cls) -> int:
+        """Returns the count of learned questions."""
         return cls.learned_count
 
     @classmethod
-    def get_unlearned(cls):
+    def get_unlearned(cls) -> int:
+        """Returns the number of unlearned questions in the queue."""
         return len(cls.queue)
 
     @classmethod
-    def get_inprocess(cls):
+    def get_inprocess(cls) -> int:
+        """Returns the count of questions currently being processed."""
         return cls.inprocess_count
 
     @classmethod
-    def skip_question(cls):
+    def skip_question(cls) -> None:
+        """Skips the current question and moves it to the end of the queue."""
         text = cls.queue.pop(0)
         if text[1] > 0:
             cls.inprocess_count -= 1
@@ -195,5 +204,6 @@ class Questions:
 
     @classmethod
     def set_random_state(cls, random_state: bool) -> None:
+        """Sets the randomization state for the queue."""
         cls.random_state = random_state
 
