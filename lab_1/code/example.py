@@ -202,21 +202,21 @@ class MainWindow(QMainWindow):
 
     def repeat_old_button_action(self):
         """ Action for button for repeat old questions.
-            Changed ui for learning.
+            Changes ui for learning.
         """
         Questions.repeat_old()
         self.change_ui()
 
     def learn_all_button_action(self):
         """ Action for button for repeat all questions.
-            Changed ui for learning.
+            Changes ui for learning.
         """
         Questions.repeat_all()
         self.change_ui()
 
     def learn_new_button_action(self):
         """ Action for button for repeat new questions.
-            Changed ui for learning.
+            Changes ui for learning.
         """
         Questions.learn_new()
         self.change_ui()
