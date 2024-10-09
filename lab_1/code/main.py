@@ -104,7 +104,6 @@ class MainWindow(QMainWindow):
         window_geometry.moveCenter(center_point)
         self.move(window_geometry.topLeft())
 
-
     def change_ui(self):
         """Changes UI after choose of type to learning
         """
