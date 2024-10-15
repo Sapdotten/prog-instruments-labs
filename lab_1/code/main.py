@@ -17,8 +17,7 @@ from PyQt5.QtGui import QIcon, QFont
 from questions import Questions
 
 class MainWindow(QMainWindow):
-    """Class of main window of the app.
-    """
+    """Class of main window of the app."""
 
     def __init__(self):
         super().__init__()
@@ -71,8 +70,7 @@ class MainWindow(QMainWindow):
         self.init_ui()
 
     def init_ui(self):
-        """initializing starting ui with button for chosing mode
-        """
+        """initializing starting ui with button for chosing mode"""
         self.setGeometry(self.X, self.Y, self.WINDOW_WIDTH, self.WINDOW_HEIGHT_MENU)
         self.setStyleSheet(f"background-color: {self.BACKGROUND_COLOR}")
         self.setWindowTitle(self.PROGRAM_NAME)
@@ -105,8 +103,7 @@ class MainWindow(QMainWindow):
         self.move(window_geometry.topLeft())
 
     def change_ui(self):
-        """Changes UI after choose of type to learning
-        """
+        """Changes UI after choose of type to learning"""
         widget = QWidget()
         widget.setStyleSheet(f"background-color: {self.BACKGROUND_COLOR};")
 
@@ -244,28 +241,23 @@ class MainWindow(QMainWindow):
         self.update_statistic_labels()
 
     def update_statistic_labels(self):
-        """ Updates labels with statistics
-        """
+        """ Updates labels with statistics"""
         self.learned_label.setText(f'Точно выучено вопросов: {Questions.get_learned()}')
         self.inprocess_label.setText(f'В процессе запоминания: {Questions.get_inprocess()}')
         self.unlearned_label.setText(f'Осталось невыученных: {Questions.get_unlearned()}')
 
-
     def set_main_menu(self):
-        """ Opens window with main menu.
-        """
+        """ Opens window with main menu."""
         self.close()
         self.__init__()
 
     def skip_question_button_action(self):
         """ Action for button for skip question.
-            Updates statistics.
-        """
+            Updates statistics."""
         Questions.skip_question()
         self.update_statistic_labels()
         text = Questions.get_question()
         self.question_label.setText(text)
-
 
 
 if __name__ == "__main__":
